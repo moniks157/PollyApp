@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31410.357
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PollyApp", "PollyApp.csproj", "{043AC4BA-852D-49DA-BBC9-4764FEA62BE2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PollyApp.Presentation", "PollyApp.Presentation.csproj", "{9D859FAF-F819-4BCD-9DEA-B0DD94BED84E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{043AC4BA-852D-49DA-BBC9-4764FEA62BE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{043AC4BA-852D-49DA-BBC9-4764FEA62BE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{043AC4BA-852D-49DA-BBC9-4764FEA62BE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{043AC4BA-852D-49DA-BBC9-4764FEA62BE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D859FAF-F819-4BCD-9DEA-B0DD94BED84E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D859FAF-F819-4BCD-9DEA-B0DD94BED84E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D859FAF-F819-4BCD-9DEA-B0DD94BED84E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D859FAF-F819-4BCD-9DEA-B0DD94BED84E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {06787C80-6BA5-4ABF-9BE7-DC4E84AC9D7F}
+		SolutionGuid = {0792C84B-20B2-48FF-AD75-E13A85326CF9}
 	EndGlobalSection
 EndGlobal
