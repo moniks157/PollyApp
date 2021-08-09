@@ -8,6 +8,10 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using PollyApp.Presentation.Policies;
+using PollyApp.Repositories;
+using PollyApp.Repositories.Interfaces;
+using PollyApp.Services;
+using PollyApp.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +31,8 @@ namespace PollyApp.Presentation
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<IHolidaysService, HolidaysService>();
+            services.AddTransient<IHolidaysReository, HolidaysRepository>();
             services.AddSingleton<PolicyHolder>(new PolicyHolder());
             services.AddControllers();
             services.AddSwaggerGen(c =>
