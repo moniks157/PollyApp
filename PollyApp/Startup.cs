@@ -1,23 +1,14 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using PollyApp.Policies;
 using PollyApp.Policies.Interfaces;
-using PollyApp.Repositories;
-using PollyApp.Repositories.Interfaces;
 using PollyApp.Services;
 using PollyApp.Services.Interfaces;
 using PollyApp.Settings;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace PollyApp.Presentation
 {
@@ -34,7 +25,6 @@ namespace PollyApp.Presentation
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<IHolidaysService, HolidaysService>();
-            services.AddTransient<IHolidaysReository, HolidaysRepository>();
             services.AddTransient<IRetryPolicyMaker, RetryPolicyMaker>();
             services.AddSingleton(new CircuitBreakerPolicyHolder());
             services.Configure<ApiAuthorisationSettings>(Configuration.GetSection(nameof(ApiAuthorisationSettings)));
