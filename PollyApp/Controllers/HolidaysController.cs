@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using PollyApp.Presentation.Policies;
 using PollyApp.Services.Interfaces;
 using System.Threading.Tasks;
 
@@ -12,7 +11,7 @@ namespace PollyApp.Presentation.Controllers
     {
         private readonly ILogger<HolidaysController> _logger;
         private readonly IHolidaysService _holidaysService;
-        public HolidaysController(ILogger<HolidaysController> logger, PolicyHolder policyHolder, IHolidaysService holidaysService)
+        public HolidaysController(ILogger<HolidaysController> logger, IHolidaysService holidaysService)
         {
             _logger = logger;
             _holidaysService = holidaysService;

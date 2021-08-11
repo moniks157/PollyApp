@@ -1,12 +1,11 @@
-﻿using Polly;
-using Polly.CircuitBreaker;
+﻿using Microsoft.Extensions.Options;
+using Polly;
 using Polly.Retry;
 using PollyApp.Constants;
-using PollyApp.Presentation.Policies;
+using PollyApp.Policies;
 using PollyApp.Repositories.Interfaces;
+using PollyApp.Settings;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -17,14 +16,16 @@ namespace PollyApp.Repositories
     public class HolidaysRepository : IHolidaysReository
     {
         private readonly AsyncRetryPolicy<HttpResponseMessage> _retryPolicy;
-        private readonly PolicyHolder _policyHolder;
+        private readonly CircuitBreakerPolicyHolder _policyHolder;
+        private readonly ApiAuthorisationSettings _apiAuthorisationSettings;
         private HttpClient httpClient;
         private string requestEndpoint;
 
         private static int attempt = 0;
-        public HolidaysRepository(PolicyHolder policyHolder)
+        public HolidaysRepository(CircuitBreakerPolicyHolder policyHolder, IOptions<ApiAuthorisationSettings> apiAuthorisationSettings)
         {
             httpClient = GetHttpClient();
+            _apiAuthorisationSettings = apiAuthorisationSettings.Value;
             _policyHolder = policyHolder;
 
             _retryPolicy = Policy
@@ -33,14 +34,14 @@ namespace PollyApp.Repositories
                 {
                     if (httpResponseMessage.Result.StatusCode == HttpStatusCode.Unauthorized)
                     {
-                        requestEndpoint = HolidaysRequestEnpoint(Credentials.API_KEY);
+                        requestEndpoint = HolidaysRequestEnpoint(_apiAuthorisationSettings.HolidaysApiKey);
                     }
                 });
         }
         
         public async Task<string> GetHolidaysRetry()
         {
-            requestEndpoint = HolidaysRequestEnpoint(Credentials.WRONG_API_KEY);
+            requestEndpoint = HolidaysRequestEnpoint(_apiAuthorisationSettings.HolidaysApiKey);
             var response = await _retryPolicy.ExecuteAsync(() => httpClient.GetAsync(requestEndpoint));
             var result = await response.Content.ReadAsStringAsync();
             return result;
@@ -78,7 +79,7 @@ namespace PollyApp.Repositories
             else
             {
                 attempt++;
-                requestEndpoint = HolidaysRequestEnpoint(Credentials.API_KEY);
+                requestEndpoint = HolidaysRequestEnpoint(_apiAuthorisationSettings.HolidaysApiKey);
                 var response = await httpClient.GetAsync(requestEndpoint);
                 var result = await response.Content.ReadAsStringAsync();
                 return result;

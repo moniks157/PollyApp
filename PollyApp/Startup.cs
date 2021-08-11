@@ -7,11 +7,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using PollyApp.Presentation.Policies;
+using PollyApp.Policies;
+using PollyApp.Policies.Interfaces;
 using PollyApp.Repositories;
 using PollyApp.Repositories.Interfaces;
 using PollyApp.Services;
 using PollyApp.Services.Interfaces;
+using PollyApp.Settings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,11 +35,13 @@ namespace PollyApp.Presentation
         {
             services.AddTransient<IHolidaysService, HolidaysService>();
             services.AddTransient<IHolidaysReository, HolidaysRepository>();
-            services.AddSingleton<PolicyHolder>(new PolicyHolder());
+            services.AddTransient<IRetryPolicyMaker, RetryPolicyMaker>();
+            services.AddSingleton(new CircuitBreakerPolicyHolder());
+            services.Configure<ApiAuthorisationSettings>(Configuration.GetSection(nameof(ApiAuthorisationSettings)));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "PollyApp.Presentation", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "PollyApp", Version = "v1" });
             });
         }
 

@@ -7,13 +7,13 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace PollyApp.Presentation.Policies
+namespace PollyApp.Policies
 {
-    public class PolicyHolder
+    public class CircuitBreakerPolicyHolder
     {
         public readonly AsyncCircuitBreakerPolicy _circuitBreakerPolicy;
         
-        public PolicyHolder()
+        public CircuitBreakerPolicyHolder()
         {
             _circuitBreakerPolicy = Policy
                .Handle<Exception>()
